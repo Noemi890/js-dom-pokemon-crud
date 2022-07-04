@@ -50,3 +50,8 @@ body {
 .pokemon h2 {
   text-align: center;
 }
+
+.delete:hover{
+  color: red;
+  cursor: pointer;
+}
