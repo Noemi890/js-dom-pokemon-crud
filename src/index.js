@@ -1,6 +1,7 @@
 const pokeForm = document.querySelector(".poke-form");
 const pokeList = document.querySelector(".poke-list");
 const state = []
+console.log(state)
 
 const getAllPokemon = () => {
   fetch('http://localhost:3000/pokemons')
@@ -17,7 +18,7 @@ function addPokemon(pokemon) {
   const liEl = document.createElement("li");
   const imgEl = document.createElement("img");
   const h2El = document.createElement("h2");
-  const deletePokemon = document.createElement('span')
+  const deletePokemon = document.createElement('button')
   const likePokemon = document.createElement('input')
 
   liEl.classList.add("pokemon");
@@ -26,7 +27,16 @@ function addPokemon(pokemon) {
   h2El.innerText = pokemon.name;
 
   deletePokemon.setAttribute('class', 'delete')
-  deletePokemon.innerHTML = 'X'
+  deletePokemon.innerHTML = 'delete'
+  deletePokemon.addEventListener('click', (event) => {
+    event.preventDefault()
+    fetch(`http://localhost:3000/pokemons/${pokemon.id}`, {
+      method: 'DELETE'
+    })
+    .then (removeFromState(pokemon))
+    .then (console.log('my state', state))
+    .then (getAllPokemon())
+  })
 
   likePokemon.type = 'checkbox'
 
@@ -45,23 +55,28 @@ function listenToAddPokemonForm() {
       name: pokeForm.name.value,
       image: pokeForm.image.value
     }
-  })
+    addToState(pokemon)
+    fetch('http://localhost:3000/pokemons', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify(pokemon)
+    })
+    .then(res => res.json())
+    .then(pokemon => addPokemon(pokemon))
+    })
+  pokeForm.reset()
 }
 
-    // CREATE
-//     fetch("http://localhost:3000/pokemons", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       body: JSON.stringify(pokemon)
-//     })
-//       .then(res =>  res.json())
-//       .then(pokemon => addPokemon(pokemon));
-//       })
+const addToState = (pokemon) => {
+  state.push(pokemon)
+}
 
-//     pokeForm.reset()
-// }
+const removeFromState = (pokemon) => {
+  const remove = state.find(pokemon)
+  state.splice(remove, 1)
+}
 
 function init() {
   listenToAddPokemonForm();
