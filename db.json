@@ -6,19 +6,19 @@
       "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Pok%C3%A9mon_Pikachu_art.png/220px-Pok%C3%A9mon_Pikachu_art.png"
     },
     {
-      "id": 2,
-      "name": "Charmander",
-      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a5/Pok%C3%A9mon_Charmander_art.png/220px-Pok%C3%A9mon_Charmander_art.png"
-    },
-    {
       "id": 3,
       "name": "Squirtle",
       "image": "https://upload.wikimedia.org/wikipedia/en/5/59/Pok%C3%A9mon_Squirtle_art.png"
     },
     {
-      "id": 4,
-      "name": "Bulbasaur",
-      "image": "https://upload.wikimedia.org/wikipedia/en/2/28/Pok%C3%A9mon_Bulbasaur_art.png"
+      "name": "Raichu",
+      "image": "https://static.pokemonpets.com/images/monsters-images-300-300/26-Raichu.webp",
+      "id": 5
+    },
+    {
+      "name": "Charizard",
+      "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png",
+      "id": 6
     }
   ]
 }

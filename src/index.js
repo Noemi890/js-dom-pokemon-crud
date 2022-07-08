@@ -1,13 +1,16 @@
 const pokeForm = document.querySelector(".poke-form");
 const pokeList = document.querySelector(".poke-list");
+const emptyHeart = '../utilities/heart-thin.png'
+const filledHeart = '../utilities/red-heart.png'
 const state = []
-console.log(state)
 
 const getAllPokemon = () => {
   fetch('http://localhost:3000/pokemons')
   .then(response => response.json())
   .then((data) => {
     data.forEach(pokemon => {
+      pokemon.liked = false
+      console.log(data)
       state.push(pokemon)
     })
   })
@@ -19,7 +22,7 @@ function addPokemon(pokemon) {
   const imgEl = document.createElement("img");
   const h2El = document.createElement("h2");
   const deletePokemon = document.createElement('button')
-  const likePokemon = document.createElement('input')
+  const likePokemon = document.createElement('img')
 
   liEl.classList.add("pokemon");
   imgEl.src = pokemon.image;
@@ -27,6 +30,7 @@ function addPokemon(pokemon) {
   h2El.innerText = pokemon.name;
 
   deletePokemon.setAttribute('class', 'delete')
+  deletePokemon.style.width = '100%'
   deletePokemon.innerHTML = 'delete'
   deletePokemon.addEventListener('click', (event) => {
     event.preventDefault()
@@ -38,14 +42,25 @@ function addPokemon(pokemon) {
     .then (getAllPokemon())
   })
 
-  likePokemon.type = 'checkbox'
+  likePokemon.src = emptyHeart
+  likePokemon.style.width = '30px'
+  likePokemon.style.marginLeft = '65px'
+  likePokemon.style.marginTop = '10px'
+  likePokemon.style.cursor = 'pointer'
+
+  likePokemon.addEventListener('click', (event) => {
+    event.preventDefault()
+    likePokemon.src = (!pokemon.liked) ? filledHeart : emptyHeart
+    pokemon.liked = (!pokemon.liked) ? true : false
+  })
 
   liEl.append(imgEl, h2El, deletePokemon, likePokemon);
   pokeList.append(liEl);
 }
 
 function addPokemons(pokemons) {
-  pokemons.forEach(pokemon => addPokemon(pokemon))
+  pokemons.forEach(pokemon => {
+    addPokemon(pokemon)})
 }
 
 function listenToAddPokemonForm() {
